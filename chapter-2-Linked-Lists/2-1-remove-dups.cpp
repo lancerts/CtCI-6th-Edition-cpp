@@ -10,7 +10,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <random>
-
+using namespace std;
 
 struct Node {
 	int data = 0;
@@ -36,24 +36,10 @@ void insert( Node * & head, int data )
  */
 void printList( Node * head ) {
 	while( head ) {
-		std::cout << head->data << "-->";
+		cout << head->data << "-->";
 		head = head->next;
 	}
-	std::cout << "nullptr" << std::endl;
-}
-
-//generate a random int between min and max
-/**
- * [random_range helper routine to generate a random number between min and max (including)]
- * @param  min [min of range]
- * @param  max [max of range]
- * @return     [A random number between min and max]
- */
-static inline int random_range(const int min, const int max) {
-	std::random_device rd;
-	std::mt19937 mt(rd());
-	std::uniform_int_distribution<int> distribution(min, max);
-	return distribution(mt);
+	cout << "nullptr" << endl;
 }
 
 
@@ -93,7 +79,7 @@ void removeDuplicates1( Node * head ) {
 	if ( head == nullptr || ( head && (head->next == nullptr) )) {
 		return ;
 	}
-	std::unordered_map<int, int> node_map;
+	unordered_map<int, int> node_map;
 	Node * prev = head;
 	Node * curr = head->next;
 	node_map[head->data] = 1;
@@ -113,19 +99,30 @@ void removeDuplicates1( Node * head ) {
 
 
 int main() {
-	std::cout << "Method 1 : \n";
+    int min_num = 1;
+    int max_num = 8;
+//    default_random_engine generator;
+    random_device rd;
+    mt19937 generator(rd());
+	uniform_int_distribution<int> distribution(min_num, max_num);
+
+
+    for ( int i = 0; i < 20; ++i ) {
+		cout << distribution(generator) << endl;
+	}
+	cout << "Method 1 : \n";
 	Node * head = nullptr;
-	for ( int i = 0; i < 10; ++i ) {
-		insert(head, random_range(1,7));
+	for ( int i = 0; i < 20; ++i ) {
+		insert(head, distribution(generator));
 	}
 	printList(head);
 	removeDuplicates(head);
 	printList(head);
 
-	std::cout << "Method 2 : \n";
+	cout << "Method 2 : \n";
 	Node * head1 = nullptr;
-	for ( int i = 0; i < 10; ++i ) {
-		insert(head1, random_range(1,7));
+	for ( int i = 0; i < 20; ++i ) {
+		insert(head1, distribution(generator));
 	}
 	printList(head1);
 	removeDuplicates1(head1);
